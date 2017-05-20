@@ -89,7 +89,8 @@ subsystems = dict({
     }
 })
 
-def randomValue(interval):
+
+def random_value(interval):
     """
     Generates a random integer value from a given interval
     """
@@ -98,18 +99,18 @@ def randomValue(interval):
     return random.randrange(interval['min'], interval['max'], 1) // 1
 
 
-def generateObject(name, subsystem):
+def generate_object(name, subsystem):
     """
     Generates random components from given input dictionary
     """
     result = {}
-    result['mass'] = randomValue(subsystem['mass'])
+    result['mass'] = random_value(subsystem['mass'])
     result['category'] = name
     if 'minWorkingTemp' in subsystem.keys(): # general rule
         if not name == 'structure':
-            result['power'] = randomValue(subsystem['power'])
-        result['minWorkingTemp'] = randomValue(subsystem['minWorkingTemp'])
-        result['maxWorkingTemp'] = randomValue(subsystem['maxWorkingTemp'])
+            result['power'] = random_value(subsystem['power'])
+        result['minWorkingTemp'] = random_value(subsystem['minWorkingTemp'])
+        result['maxWorkingTemp'] = random_value(subsystem['maxWorkingTemp'])
         if 'density' in subsystem.keys():  # rule power or battery
             result['volume'] = int(result['mass'] / subsystem['density']) // 1
             if name == 'primary power':
@@ -119,12 +120,12 @@ def generateObject(name, subsystem):
                 result['cost'] = result['power'] * 16
                 return result
         else:    # rule for other not generator
-            result['volume'] = result['mass'] + randomValue({'min': -5, 'max': 5})
+            result['volume'] = result['mass'] + random_value({'min': -5, 'max': 5})
             if name not in ['structure', 'attitude and orbit control']:
                 if name == 'detector':
                     result['type'] = random.choice(['interferometer', 'spectrometer', 'photometer', 'optical', 'dust detector'])
 
-                result['cost'] = randomValue(subsystem['cost'])
+                result['cost'] = random_value(subsystem['cost'])
                 return result
             else:
                 if name == 'structure':
@@ -139,15 +140,15 @@ def generateObject(name, subsystem):
                     else:
                         result['type'] = 'active'
                         result['mechanism'] = random.choice(subsystem['active'])
-                    result['cost'] = randomValue(subsystem['cost'])
+                    result['cost'] = random_value(subsystem['cost'])
                     return result
 
     else: # rule for thermal
-        result['volume'] = result['mass'] + randomValue({'min': -5, 'max': 5})
-        result['power'] = randomValue(subsystem['power'])
+        result['volume'] = result['mass'] + random_value({'min': -5, 'max': 5})
+        result['power'] = random_value(subsystem['power'])
         if result['power'] > 0 : result['power'] = 0
-        result['minTemperature'] = randomValue(subsystem['minTemperature'])
-        result['maxTemperature'] = randomValue(subsystem['maxTemperature'])
+        result['minTemperature'] = random_value(subsystem['minTemperature'])
+        result['maxTemperature'] = random_value(subsystem['maxTemperature'])
 
         result['cost'] = (result['maxTemperature'] - result['minTemperature']) * 20
 
@@ -167,7 +168,7 @@ def gen_all_types():
         obj = {}
         obj['name'] = name
         obj['id'] = i + 1
-        obj['object'] = generateObject(k, v)
+        obj['object'] = generate_object(k, v)
         output.append(obj)
         i+=1
     return output

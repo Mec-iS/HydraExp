@@ -8,6 +8,7 @@ Host : localhost
 """
 import psycopg2 as psql
 
+
 def create_relations():
     db_credentials = "dbname='hydra' user='hydrus' host='localhost' password='hydra'"
     # Starting a connection to postgres DB and getting a cursor
@@ -129,6 +130,7 @@ def create_relations():
     conn.commit()
     # Close connection
     conn.close()
+
 
 def delete_all():
     db_credentials = "dbname='hydra' user='hydrus' host='localhost' password='hydra'"

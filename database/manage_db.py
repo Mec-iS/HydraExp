@@ -1,20 +1,34 @@
-import sqlite3
-from generator import *
+import random
+import string
 
-## Generate random prices for products in range 10-1000
+import sqlite3
+from database.generator import *
+
+
 def gen_random_price():
+    """
+    Generate random prices for products in range 10-1000
+    :return:
+    """
     return round(random.uniform(10, 1000),2)
 
 
-# Generate random names for products
 def gen_random_name():
+    """
+    Generate random names for products
+    :return:
+    """
     name = []
     for i in range(8):
         name.append(random.choice(string.ascii_lowercase))
     return "".join(name)
 
-# Generate desc sentences for products
+
 def gen_random_desc():
+    """
+    Generate desc sentences for products
+    :return:
+    """
     nouns = ("puppy", "car", "rabbit", "girl", "monkey")
     verbs = ("runs", "hits", "jumps", "drives", "barfs")
     adv = ("crazily.", "dutifully.", "foolishly.", "merrily.", "occasionally.")
@@ -24,8 +38,13 @@ def gen_random_desc():
 
 # print(gen_random_name(), gen_random_price(), gen_random_desc())
 
-# Insert N rows into the database of dummy data
+
 def insert_data(n):
+    """
+    Insert N rows into the database of dummy data
+    :param n:
+    :return:
+    """
     conn = sqlite3.connect('../database.db')
 
     cur = conn.cursor()
@@ -40,6 +59,7 @@ def insert_data(n):
     conn.close()
 
 # insert_data(100)
+
 
 def get_all_data():
     conn = sqlite3.connect("../database.db")
